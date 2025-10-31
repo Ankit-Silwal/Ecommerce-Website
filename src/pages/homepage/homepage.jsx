@@ -1,14 +1,13 @@
+import axios from 'axios';
 import "./homepage.css";
 import { Header } from "./header";
 import "./general.css";
-import { convertDollars } from "../../../public/moneyfornat";
+import { convertDollars } from "../../../public/moneyformat";
 import { products } from '../../../ecommerce-project-main/data/products'
 export function HomePage() {
-  fetch('http://localhost:3000/api/products')
+  axios.get('http://localhost:3000/api/products')
     .then((response)=>{
-      return response.json()
-    }).then((data)=>{
-      console.log(data);
+      console.log(response.data)
     })
   return (
     <>
