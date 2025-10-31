@@ -1,14 +1,18 @@
 import axios from 'axios';
+import { useEffect,useState } from 'react';
 import "./homepage.css";
 import { Header } from "./header";
 import "./general.css";
 import { convertDollars } from "../../../public/moneyformat";
-import { products } from '../../../ecommerce-project-main/data/products'
 export function HomePage() {
-  axios.get('http://localhost:3000/api/products')
-    .then((response)=>{
-      console.log(response.data)
-    })
+  const [products,setProducts]=useState([]);
+  useEffect(()=>{
+      axios.get('http://localhost:3000/api/products')
+      .then((response)=>{
+        setProducts(response.data)
+      })
+  },[])
+  
   return (
     <>
       <Header />
