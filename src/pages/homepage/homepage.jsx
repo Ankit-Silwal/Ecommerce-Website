@@ -5,7 +5,7 @@ import { Header } from "./header";
 import "./general.css";
 import { ProductsGrid } from "./productsgrid";
 
-export function HomePage({ cart }) {
+export function HomePage({ cart,loadCart }) {
   const [products, setProducts] = useState([]);
   useEffect(()=>{
     const getHomeData=async ()=>{
@@ -16,12 +16,8 @@ export function HomePage({ cart }) {
   })
   useEffect(() => {
     const getHomeData = async () => {
-      try {
         const response = await axios.get("/api/products");
-        setProducts(response.data);
-      } catch (err) {
-        console.error("Failed to load products:", err);
-      }
+        setProducts(response.data); 
     };
     getHomeData();
   }, []);
@@ -29,7 +25,7 @@ export function HomePage({ cart }) {
     <>
       <Header cart={cart} />
       <div className="home-page">
-        <ProductsGrid products={products} />
+        <ProductsGrid products={products} loadCart={loadCart} />
       </div>
     </>
   );
