@@ -9,14 +9,17 @@ export default function App(){
     const [paymentSummery,setPaymentSummary]=useState(null)
     const [cart,setCart]=useState([]);
     useEffect(()=>{
-      axios.get('/api/cart-items?expand=product')
-      .then((response)=>{
+      const getCartData=async ()=>{
+        let response=await axios.get('/api/cart-items?expand=product')
         setCart(response.data)
-      })
-      axios.get("/api/payment-summary").then((response)=>{
+      }
+      const getPaymentSummary=async ()=>{
+        let response=await axios.get('/api/payment-summary')
         setPaymentSummary(response.data)
-      })
-    },[])
+      }
+      getCartData();
+      getPaymentSummary();
+    })
   return (
       <Routes>
         <Route path="/" element={<HomePage cart={cart}/>} />

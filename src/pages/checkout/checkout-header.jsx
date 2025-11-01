@@ -17,7 +17,7 @@ export function CheckoutHeader(){
         </div>
 
         <div className="checkout-header-right-section">
-          <img src="images/icons/checkout-lock-icon.png" />
+          <img src="/images/icons/checkout-lock-icon.png" />
         </div>
       </div>
     </div>
