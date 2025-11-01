@@ -1,10 +1,18 @@
 import './orders.css';
 import { OrdersHeader } from './orders_header';
 import { Link } from 'react-router-dom';
-export function Orders(){
+import axios from 'axios';
+import { useEffect,useState } from 'react';
+export function Orders({paymentSummary}){
+  const [orders,setOrders]=useState([])
+  useEffect(()=>{
+    axios.get('/api/orders?expand=products').then((response)=>{
+      setOrders(response.data)
+    })
+  },[])
   return (
     <>
-    <OrdersHeader />
+    <OrdersHeader paymentSummary={paymentSummary}/>
     <div className="orders-page">
       <div className="page-title">Your Orders</div>
 

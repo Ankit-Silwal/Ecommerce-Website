@@ -4,19 +4,14 @@ import { CheckoutHeader } from "./checkout-header";
 import axios from "axios";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-export function CheckOut({ cart }) {
+export function CheckOut({ cart ,paymentSummery}) {
   const [delivery, setDelivery] = useState([]);
-  const [paymentSummery,setPaymentSummary]=useState(null)
   useEffect(() => {
     axios
       .get("/api/delivery-options?expand=estimatedDeliveryTime")
       .then((response) => {
         setDelivery(response.data);
-      });
-      axios.get("/api/payment-summary").then((response)=>{
-        setPaymentSummary(response.data)
-      })
-  }, []);
+      })}, []);
   return (
     <>
       <CheckoutHeader />

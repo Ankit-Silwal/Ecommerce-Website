@@ -1,6 +1,6 @@
 import "./orders_header.css"
 import { Link } from "react-router-dom"
-export function OrdersHeader(){
+export function OrdersHeader({paymentSummary}){
   return(
     <div className="header">
       <div className="left-section">
@@ -28,7 +28,7 @@ export function OrdersHeader(){
 
         <Link className="cart-link header-link" to="/checkout">
           <img className="cart-icon" src="images/icons/cart-icon.png" />
-          <div className="cart-quantity">3</div>
+          <div className="cart-quantity">{paymentSummary.totalItems}</div>
           <div className="cart-text">Cart</div>
         </Link>
       </div>
