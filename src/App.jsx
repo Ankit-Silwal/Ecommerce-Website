@@ -1,10 +1,10 @@
-import { HomePage } from "./pages/checkout/homepage/homepage";
 import { CheckOut } from "./pages/checkout/checkout";
 import {Orders} from './pages/orders/orders';
 import { Tracking } from "./pages/tracking/Tracking";
 import {Routes,Route} from 'react-router-dom'
 import { useEffect,useState } from "react";
 import axios from "axios";
+import { HomePage } from "./pages/homepage/homepage";
 export default function App(){
     const [paymentSummery,setPaymentSummary]=useState(null)
     const [cart,setCart]=useState([]);

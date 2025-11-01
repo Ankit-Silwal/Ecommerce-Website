@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { convertDollars } from "../../../../public/moneyformat";
+import { convertDollars } from "../../utils/moneyformat";
 import axios from "axios";
 export function Product({ product, loadCart }) {
   const [quantity, setQuantity] = useState(1);
@@ -25,7 +25,8 @@ export function Product({ product, loadCart }) {
       <div className="product-rating-container">
         <img
           className="product-rating-stars"
-          src={`images/ratings/rating-${product.rating.stars * 10}.png`}
+          src={`/images/ratings/rating-${Math.round(product.rating.stars * 10)}.png`}
+          alt={`${product.rating.stars} stars`}
         />
         <div className="product-rating-count link-primary">
           {product.rating.count}
@@ -52,7 +53,7 @@ export function Product({ product, loadCart }) {
       <div className="product-spacer"></div>
 
       <div className="added-to-cart">
-        <img src="images/icons/checkmark.png" />
+  <img src="/images/icons/checkmark.png" alt="Added to cart" />
         Added
       </div>
 
