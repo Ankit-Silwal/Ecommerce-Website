@@ -11,10 +11,23 @@ export function OrderSummary({ cart, delivery, loadCart }) {
           const selectedDeliveryOption = delivery.find((deliveryOption) => {
             return deliveryOption.id == cartItem.deliveryOptionId;
           });
-          const deleteCartItem=async ()=>{
-            await axios.delete(`/api/cart-Items/${cartItem.productId}`)
+          const deleteCartItem = async () => {
+            await axios.delete(`/api/cart-items/${cartItem.productId}`);
             await loadCart();
-          }
+          };
+          const updateQuantity = async () => {
+            const input = window.prompt(
+              "Enter new quantity (1-10):",
+              String(cartItem.quantity)
+            );
+            if (input === null) return;
+            const quantity = Number(input);
+            if (!Number.isInteger(quantity) || quantity < 1) return;
+            await axios.put(`/api/cart-items/${cartItem.productId}`, {
+              quantity,
+            });
+            await loadCart();
+          };
           return (
             <div key={cartItem.productId} className="cart-item-container">
               <div className="delivery-date">
@@ -40,7 +53,7 @@ export function OrderSummary({ cart, delivery, loadCart }) {
                         {cartItem.quantity}
                       </span>
                     </span>
-                    <span className="update-quantity-link link-primary">
+                    <span className="update-quantity-link link-primary" onClick={updateQuantity}>
                       Update
                     </span>
                     <span className="delete-quantity-link link-primary"

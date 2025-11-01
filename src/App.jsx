@@ -1,4 +1,4 @@
-import { HomePage } from "./pages/homepage/homepage";
+import { HomePage } from "./pages/checkout/homepage/homepage";
 import { CheckOut } from "./pages/checkout/checkout";
 import {Orders} from './pages/orders/orders';
 import { Tracking } from "./pages/tracking/Tracking";
