@@ -1,6 +1,11 @@
 import './checkout-header.css';
 import { Link } from 'react-router-dom';
-export function CheckoutHeader(){
+
+export function CheckoutHeader({ cart = [] }){
+  const itemCount = Array.isArray(cart)
+    ? cart.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0)
+    : 0;
+
   return(
     <div className="checkout-header">
       <div className="header-content">
@@ -13,7 +18,7 @@ export function CheckoutHeader(){
 
         <div className="checkout-header-middle-section">
           Checkout (<Link className="return-to-home-link"
-            to="/">3 items</Link>)
+            to="/">{itemCount} {itemCount === 1 ? 'item' : 'items'}</Link>)
         </div>
 
         <div className="checkout-header-right-section">
