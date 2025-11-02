@@ -1,9 +1,30 @@
 import dayjs from "dayjs";
 import axios from "axios";
-import { convertDollars } from "../../../public/moneyformat";
+import { useState } from "react";
+import { convertDollars } from "../../utils/moneyformat";
 import { DeliveryOption } from "./deliveroptions";
 
 export function OrderSummary({ cart, delivery, loadCart }) {
+  const [editingItemId, setEditingItemId] = useState(null);
+  const [qtyInput, setQtyInput] = useState(1);
+
+  const cancelEdit = () => {
+    setEditingItemId(null);
+  };
+
+  const startEdit = (cartItem) => {
+    setEditingItemId(cartItem.productId);
+    setQtyInput(cartItem.quantity);
+  };
+
+  const saveQuantity = async (productId) => {
+    const quantity = Number(qtyInput);
+    if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) return;
+    await axios.put(`/api/cart-items/${productId}`, { quantity });
+    await loadCart();
+    setEditingItemId(null);
+  };
+
   return (
     <div className="order-summary">
       {delivery.length > 0 &&
@@ -15,18 +36,15 @@ export function OrderSummary({ cart, delivery, loadCart }) {
             await axios.delete(`/api/cart-items/${cartItem.productId}`);
             await loadCart();
           };
-          const updateQuantity = async () => {
-            const input = window.prompt(
-              "Enter new quantity (1-10):",
-              String(cartItem.quantity)
-            );
-            if (input === null) return;
-            const quantity = Number(input);
-            if (!Number.isInteger(quantity) || quantity < 1) return;
-            await axios.put(`/api/cart-items/${cartItem.productId}`, {
-              quantity,
-            });
-            await loadCart();
+          const onQtyChange = (e) => {
+            const val = e.target.value;
+
+            if (val === "") { setQtyInput(""); return; }
+            const n = Number(val);
+            if (Number.isFinite(n)) {
+              const clamped = Math.max(1, Math.min(10, Math.trunc(n)));
+              setQtyInput(clamped);
+            }
           };
           return (
             <div key={cartItem.productId} className="cart-item-container">
@@ -53,11 +71,44 @@ export function OrderSummary({ cart, delivery, loadCart }) {
                         {cartItem.quantity}
                       </span>
                     </span>
-                    <span className="update-quantity-link link-primary" onClick={updateQuantity}>
-                      Update
-                    </span>
-                    <span className="delete-quantity-link link-primary"
-                      onClick={deleteCartItem}>
+                    {editingItemId === cartItem.productId ? (
+                      <>
+                        <input
+                          className="quantity-input"
+                          type="number"
+                          min="1"
+                          max="10"
+                          value={qtyInput}
+                          onChange={onQtyChange}
+                          style={{ width: 60, marginLeft: 8 }}
+                        />
+                        <span
+                          className="link-primary"
+                          style={{ marginLeft: 8 }}
+                          onClick={() => saveQuantity(cartItem.productId)}
+                        >
+                          Save
+                        </span>
+                        <span
+                          className="link-primary"
+                          style={{ marginLeft: 8 }}
+                          onClick={cancelEdit}
+                        >
+                          Cancel
+                        </span>
+                      </>
+                    ) : (
+                      <span
+                        className="update-quantity-link link-primary"
+                        onClick={() => startEdit(cartItem)}
+                      >
+                        Update
+                      </span>
+                    )}
+                    <span
+                      className="delete-quantity-link link-primary"
+                      onClick={deleteCartItem}
+                    >
                       Delete
                     </span>
                   </div>
