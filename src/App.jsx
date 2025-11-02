@@ -26,7 +26,7 @@ export default function App(){
       <Routes>
         <Route path="/" element={<HomePage cart={cart} loadCart={loadCart}/>} />
         <Route path="/checkout" element={<CheckOut cart={cart} paymentSummery={paymentSummery} loadCart={loadCart}> /</CheckOut>} />
-        <Route path="/orders" element={<Orders paymentSummary={paymentSummery} />} />
+        <Route path="/orders" element={<Orders paymentSummary={paymentSummery} loadCart={loadCart}/>} />
         <Route path="/tracking" element={<Tracking />} />
       </Routes>
   )
