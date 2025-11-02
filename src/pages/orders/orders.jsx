@@ -28,7 +28,7 @@ export function Orders({ paymentSummary,loadCart }) {
         <div className="orders-grid">
           {orders.map((order) => {
             return (
-              <div className="order-container">
+              <div key={order.id} className="order-container">
                 <div className="order-header">
                   <div className="order-header-left-section">
                     <div className="order-date">

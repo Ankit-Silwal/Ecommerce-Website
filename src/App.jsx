@@ -22,6 +22,11 @@ export default function App(){
     useEffect(()=>{
       loadPayment();
     })
+    window.axios=axios;
+    window.resetApi=async ()=>{
+      await axios.post('/api/reset')
+      {loadCart}
+    }
   return (
       <Routes>
         <Route path="/" element={<HomePage cart={cart} loadCart={loadCart}/>} />
