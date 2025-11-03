@@ -47,14 +47,14 @@ export function Product({ product, loadCart }) {
   return (
     <div className="product-container">
       <div className="product-image-container">
-        <img className="product-image" src={`/${product.image}`} alt={product.name} />
+        <img className="product-image" data-testid="product-image" src={`/${product.image}`} alt={product.name} />
       </div>
 
       <div className="product-name limit-text-to-2-lines">{product.name}</div>
 
       <div className="product-rating-container">
         <img
-          className="product-rating-stars"
+          className="product-rating-stars" data-testid="product-rating-stars-image"
           src={`/images/ratings/rating-${Math.round(
             product.rating.stars * 10
           )}.png`}
