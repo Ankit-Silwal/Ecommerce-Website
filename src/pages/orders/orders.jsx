@@ -49,13 +49,17 @@ export function Orders({ paymentSummary,loadCart }) {
 
                 <div className="order-details-grid">
                   {order.products.map((orderProduct) => {
-                    let buyagain=async ()=>{
-                      axios.post('/api/cart-item',{
-                        productId:orderProduct.productId,
-                        quantity:1
-                      })
-                      loadCart();
-                    }
+                    let buyagain = async () => {
+                      try {
+                        await axios.post('/api/cart-items', {
+                          productId: orderProduct.productId,
+                          quantity: 1,
+                        });
+                        await loadCart();
+                      } catch (err) {
+                        console.error('Add to cart failed', err);
+                      }
+                    };
                     return (
                       <Fragment key={orderProduct.productId}>
                         <div className="product-image-container">
